@@ -1,9 +1,37 @@
-<form
-  meth="post"
-  enctype="multipart/form-data"
-  action="/imageprocessing/upload"
->
-  {% csrf_token %}
-  <input type="file" name="image" accept="image/" />
-  <button type="submit">Upload Image</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Processing App</title>
+  </head>
+  <body>
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      action="/imagepro/"
+    >
+      {% csrf_token %}
+
+      <input type="file" name="image" accept="image/" />
+
+      <label for="filter">Filter:</label>
+
+      <select name="filter" id="filter">
+        <option value="grayscale">Grayscale</option>
+        <option value="sepia">Sepia</option>
+        <option value="poster">Poster</option>
+        <option value="edge">Edge</option>
+        <option value="blur">Blur</option>
+        <option value="solar">Solar</option>
+      </select>
+
+      <button type="submit">Upload Image</button>
+    </form>
+
+    {% if s3_path %}
+    <img src="{{ s3_path }}" alt="Processed image" width="512px" />
+    <a href="{{ s3_path }}">Download</a>
+    {% endif %}
+  </body>
+</html>
